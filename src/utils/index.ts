@@ -20,10 +20,10 @@ function showConfigList() {
  * 模版列表配置
  */
 function templateConfig(): Utils.TemplateconfigType {
-  let initTemplatePath: string = "../commands/init_template.ts";
+  let initTemplatePath: string = "../commands/init_template.js";
   if (!workspacePath) {
     // return vscode.window.showErrorMessage("workspace path is undefined");
-    return { configPath: "", initPath: initTemplatePath };
+    return { configPath: "", initPath: initTemplate };
   }
   let configTemplatePath: string = path.join(
     workspacePath,
@@ -31,7 +31,7 @@ function templateConfig(): Utils.TemplateconfigType {
   );
   return {
     configPath: configTemplatePath,
-    initPath: initTemplatePath
+    initPath: initTemplate
   };
 }
 

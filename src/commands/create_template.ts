@@ -18,10 +18,17 @@ function showCreateList() {
   let importMenu: Array<string>;
   let Menu: Array<string>;
   let { configPath, initPath } = utils.templateConfig();
-  // let configData = fs.readFileSync(require.resolve(configPath)).toString();
-  let initData = require(initPath);
+  try {
+    if(!fs.existsSync(configPath)){
+      // fs.mkdirSync();
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  let initData = initPath;
   // console.log("importData", configData);
-  console.log("initData", initData);
+  console.log("initData", Object.keys(initData)[0]);
+
   return [];
 }
 
