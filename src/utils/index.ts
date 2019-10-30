@@ -23,14 +23,18 @@ function templateConfig(): Utils.TemplateconfigType {
   let initTemplatePath: string = "../commands/init_template.js";
   if (!workspacePath) {
     // return vscode.window.showErrorMessage("workspace path is undefined");
-    return { configPath: "", initPath: initTemplate };
+    return {
+      configPath: { floder: "", file: "", path: "" },
+      initPath: initTemplate
+    };
   }
-  let configTemplatePath: string = path.join(
-    workspacePath,
-    ".vscode/create_template_floder.ts"
-  );
+  let configTemplateFloder: string = path.join(workspacePath, ".vscode");
   return {
-    configPath: configTemplatePath,
+    configPath: {
+      floder: configTemplateFloder,
+      file: "create_template_floder_config.ts",
+      path: `${configTemplateFloder}/create_template_floder_config.ts`
+    },
     initPath: initTemplate
   };
 }
@@ -51,11 +55,43 @@ function readFiles(path: string) {
 }
 
 /**
- * 同步读取文件
+ * 检查配置目录
  */
+function checkFloder(configPath: Utils.ConfigPath) {
+  try {
+    if (!fs.existsSync(configPath.floder)) {
+      fs.mkdir(configPath.floder, err => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        initJS(configPath.path);
+      });
+
+      console.log(configPath);
+    } else {
+      if (!fs.existsSync(configPath.path)) {
+        initJS(configPath.path);
+      }
+    }
+  } catch (err) {
+    console.log("err1", err);
+  }
+}
+
+/**
+ * 初始化配置文件
+ */
+function initJS(path: string) {
+  fs.writeFile(path, "test", err => {
+    console.log("err2", err);
+  });
+}
+
 
 export default {
   showConfigList,
   templateConfig,
-  readFiles
+  readFiles,
+  checkFloder
 };

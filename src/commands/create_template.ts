@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import * as path from "path";
 import * as fs from "fs";
 import utils from "../utils";
+import { promises } from "dns";
 
 let disposable = vscode.commands.registerCommand(
   "extension.create_template",
@@ -18,13 +19,7 @@ function showCreateList() {
   let importMenu: Array<string>;
   let Menu: Array<string>;
   let { configPath, initPath } = utils.templateConfig();
-  try {
-    if(!fs.existsSync(configPath)){
-      // fs.mkdirSync();
-    }
-  } catch (err) {
-    console.log(err);
-  }
+  utils.checkFloder(configPath);
   let initData = initPath;
   // console.log("importData", configData);
   console.log("initData", Object.keys(initData)[0]);
