@@ -83,7 +83,7 @@ function checkFloder(configPath: Utils.ConfigPath) {
  * 初始化配置文件
  */
 function initJS(path: string) {
-  fs.writeFile(path, "test", err => {
+  fs.writeFile(path, initTemplate, err => {
     console.log("err2", err);
   });
 }
